@@ -1,63 +1,66 @@
-# Astro Starter Kit: Blog
+# Fuera del Marco
 
-```sh
-npm create astro@latest -- --template blog
-```
+Blog personal hecho con Astro. La idea del sitio es publicar textos (Markdown) con una estructura sencilla: portada, listado de posts, post individual, una página “Sobre mí” y un feed RSS.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Qué encontrarás
 
-Features:
+- **Inicio**: portada del sitio.
+- **Blog**: listado de artículos.
+- **Post**: página individual por artículo (ruta por *slug*).
+- **Sobre mí**: página estática.
+- **RSS**: feed con las últimas publicaciones.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+Los metadatos globales del sitio (título y descripción) viven en `src/consts.ts`.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Estructura del proyecto
 
 ```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+public/              # Archivos estáticos (p. ej. CNAME)
+src/
+  pages/             # Rutas del sitio (Astro)
+  content/blog/      # Posts en Markdown/MDX
+  layouts/           # Layouts (p. ej. BlogPost)
+  components/        # Header, Footer, etc.
+  styles/            # CSS global
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Escribir un post
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Los posts se guardan en `src/content/blog/` como `.md` o `.mdx`.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+El *frontmatter* está validado por Content Collections y debe incluir como mínimo:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```yaml
+---
+title: "Título del post"
+description: "Resumen corto para listados y SEO"
+pubDate: 2026-04-22
+# Opcionales
+updatedDate: 2026-04-23
+tags:
+  - tag-1
+  - tag-2
+heroImage: "./ruta/a/imagen" # si aplica
+---
+```
 
-## 🧞 Commands
+Notas:
 
-All commands are run from the root of the project, from a terminal:
+- `pubDate`/`updatedDate` se convierten a `Date` automáticamente.
+- `tags` es opcional.
+- `heroImage` es opcional (si lo usas, debe ser una imagen válida para Astro).
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Comandos
 
-## 👀 Want to learn more?
+Desde la raíz del proyecto:
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Comando | Acción |
+| --- | --- |
+| `npm install` | Instala dependencias |
+| `npm run dev` | Arranca el servidor local (`http://localhost:4321`) |
+| `npm run build` | Genera el build de producción en `dist/` |
+| `npm run preview` | Previsualiza el build |
 
-## Credit
+## Publicación
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+El proyecto genera un sitio estático. El output está en `dist/` tras `npm run build` (ideal para Netlify, Vercel, GitHub Pages, etc.).
